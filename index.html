@@ -263,7 +263,7 @@
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
-            transition: opacity 1.5s ease 2.5s, visibility 1.5s ease 2.5s;
+            transition: opacity 1s ease 1.5s, visibility 1s ease 1.5s;
         }
 
         .envelope-container {
@@ -292,11 +292,11 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 92%;
-            height: 88%;
+            height: 92%;
             background: linear-gradient(180deg, #12182b 0%, #0d1220 100%);
             border-radius: 3px;
             z-index: 5;
-            padding: 30px 20px;
+            padding: 20px 15px;
             text-align: center;
             box-shadow: 0 2px 20px rgba(201, 169, 98, 0.15), 0 0 40px rgba(201, 169, 98, 0.05);
             transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -333,39 +333,40 @@
         }
 
         .letter-icon {
-            font-size: 36px;
-            margin-bottom: 15px;
+            font-size: 28px;
+            margin-bottom: 10px;
             opacity: 0.8;
         }
 
         .letter-title {
             font-family: 'Great Vibes', cursive;
-            font-size: 32px;
+            font-size: 26px;
             color: var(--gold);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            margin-top: 10px;
         }
 
         .letter-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 15px;
-            line-height: 1.6;
+            font-size: 13px;
+            line-height: 1.5;
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 15px;
-            max-width: 220px;
+            margin-bottom: 10px;
+            max-width: 200px;
         }
 
         .letter-names {
             font-family: 'Great Vibes', cursive;
-            font-size: 24px;
+            font-size: 20px;
             color: var(--gold);
         }
 
         .letter-date {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 13px;
+            font-size: 12px;
             color: rgba(201, 169, 98, 0.6);
             letter-spacing: 2px;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
         /* Envelope front flaps */
@@ -503,7 +504,7 @@
         }
 
         .envelope-container.open .letter-card {
-            transform: translate(-50%, -160%);
+            transform: translate(-50%, -180%);
         }
 
         .envelope-container.open .seal {
@@ -1139,7 +1140,6 @@
             <!-- Letter inside -->
             <div class="letter-card" id="letterCard">
                 <div class="letter-inner">
-                    <div class="letter-icon">💌</div>
                     <div class="letter-title">Приглашение</div>
                     <div class="letter-text">
                         Дорогие гости!<br><br>
