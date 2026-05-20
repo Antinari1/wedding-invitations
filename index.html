@@ -1331,7 +1331,7 @@
             </form>
             <div id="rsvpSuccess" style="display:none; margin-top:25px; padding:18px; background:rgba(201,169,98,0.08); border:1px solid rgba(201,169,98,0.2); border-radius:4px;">
                 <p style="color:var(--gold); font-size:18px; margin-bottom:10px;">✓ Спасибо!</p>
-                <p style="color:rgba(255,255,255,0.7);">Ваш ответ отправлен. Если email не открылся автоматически, пожалуйста, свяжитесь с нами напрямую.</p>
+                <p style="color:rgba(255,255,255,0.7);">Ваш ответ успешно отправлен! Мы с нетерпением ждём встречи с вами.</p>
             </div>
         </section>
 
@@ -1472,8 +1472,8 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ===== RSVP FORM with Google Apps Script =====
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzGwnRUe8ee1xXZw6-MJJtiCWR7rviI2p7g4aLHufUICo_K8gS9WFG3GB-6aTGNvyfo/exec';
+        // ===== RSVP FORM with Formspree =====
+        const FORMSPREE_URL = 'https://formspree.io/f/mbdbdwbn';
 
         async function handleRSVP(e) {
             e.preventDefault();
@@ -1484,7 +1484,7 @@
             const guestNames = document.getElementById('rsvpGuestNames').value || 'не указано';
             const comment = document.getElementById('rsvpComment').value || 'нет';
 
-            const attendingText = attending === 'yes' ? '✅ Да, приду' : '❌ К сожалению, не смогу прийти';
+            const attendingText = attending === 'yes' ? 'Да, приду' : 'К сожалению, не смогу прийти';
 
             // Show loading state
             const submitBtn = e.target.querySelector('.submit-btn');
@@ -1493,27 +1493,29 @@
             submitBtn.disabled = true;
 
             try {
-                // Send to Google Apps Script (no CORS issues!)
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                // Send to Formspree
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('attending', attendingText);
+                formData.append('guests', guests);
+                formData.append('guestNames', guestNames);
+                formData.append('comment', comment);
+                formData.append('_subject', 'RSVP: Свадьба Нодирбека и Насибахон — ' + name);
+
+                const response = await fetch(FORMSPREE_URL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        name: name,
-                        attending: attendingText,
-                        guests: guests,
-                        guestNames: guestNames,
-                        comment: comment
-                    })
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 });
 
-                const result = await response.json();
-
-                if (result.ok) {
+                if (response.ok) {
                     // Success
                     document.getElementById('rsvpForm').style.display = 'none';
                     document.getElementById('rsvpSuccess').style.display = 'block';
                 } else {
-                    throw new Error('Server error');
+                    throw new Error('Formspree error');
                 }
             } catch (error) {
                 console.error('Error:', error);
